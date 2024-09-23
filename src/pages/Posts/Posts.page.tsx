@@ -4,11 +4,12 @@ import { getPosts } from "../../redux/slices";
 import PostCard from "./Post.card";
 import { Grid, Pagination } from "@mui/material";
 import { paginateByQty } from "../../utils/utils";
+import { Post } from "../../api/types";
 
 const PostsPage = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector((state) => state.posts.list);
-  const postsBy10 = paginateByQty(8, posts);
+  const postsByQty = paginateByQty(8, posts);
 
   const [page, setPage] = useState(1);
 
@@ -34,9 +35,9 @@ const PostsPage = () => {
           spacing={2}
           sx={{ display: "flex", justifyContent: "center" }}
         >
-          {postsBy10[page - 1]?.map((post) => (
+          {postsByQty[page - 1]?.map((post) => (
             <Grid item key={post.id}>
-              <PostCard post={post} />
+              <PostCard post={post as Post} />
             </Grid>
           ))}
         </Grid>
@@ -44,7 +45,7 @@ const PostsPage = () => {
 
       <Grid item>
         <Pagination
-          count={postsBy10?.length}
+          count={postsByQty?.length}
           onChange={(_, page: number) => setPage(page)}
           color="secondary"
         />

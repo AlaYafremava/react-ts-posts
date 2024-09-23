@@ -8,10 +8,12 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getPostById } from "../../redux/slices";
+import { getUserById } from "../../redux/slices/users/users.actions";
 
 export default function PostPage() {
   const dispatch = useAppDispatch();
   const post = useAppSelector((state) => state.posts.post);
+  const user = useAppSelector((state) => state.users.user);
   const { id } = useParams();
 
   useEffect(() => {
@@ -22,14 +24,22 @@ export default function PostPage() {
     fetchPost();
   }, [dispatch, id]);
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      await dispatch(getUserById(post?.userId as string));
+    };
+
+    fetchUser();
+  }, [dispatch, post]);
+
   return (
-    <Card sx={{margin: '10px'}}>
+    <Card sx={{ margin: "10px" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: blue[500] }} aria-label="avatar"></Avatar>
         }
-        title="User"
-        subheader="Userovish"
+        title={user?.name}
+        subheader={user?.address.city}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
