@@ -6,9 +6,9 @@ const RESET_STORE = 'RESET_STORE';
 export const resetStore = () => ({ type: RESET_STORE });
 
 const rootReducer = combineReducers({
-  postsState: postsReducer,
+  posts: postsReducer,
   // TODO: Users
-  // usersState: usersReducer,
+  // users: usersReducer,
 });
 
 const rootReducerWithReset = (state: RootState | undefined, action: Action<string>) => {

@@ -36,7 +36,7 @@ function App() {
   return (
     <Grid container>
       <Navigation navigationButtons={navigationButtons} width={NAV_WIDTH} />
-      <Box width={`calc(100% - ${NAV_WIDTH}px)`}>
+      <Box width={`calc(100% - ${NAV_WIDTH}px)`} sx={{display: 'flex', alignItems: 'center'}}>
         <Outlet />
       </Box>
     </Grid>

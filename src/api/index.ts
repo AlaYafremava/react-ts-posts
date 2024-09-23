@@ -38,8 +38,8 @@ const request = {
 };
 
 const posts = {
-  getPosts: () => request.get<Post[]>("/Post"),
-  getPostById: (id: string) => request.get<Post>(`/Post/${id}`),
+  getPosts: () => request.get<Post[]>("/posts"),
+  getPostById: (id: string) => request.get<Post>(`/posts/${id}`),
 };
 
 const users = {

@@ -1,19 +1,13 @@
-// import { AxiosError } from "axios";
 import { reducers } from "./posts.slice";
 import api from "../../../api";
 import { AppDispatch } from "../../store";
 
-const { setPostList } = reducers;
+const { setPostList, setPost } = reducers;
 
-export const getPost = (id: string) => async () => {
-
-  // TODO: check and finish
-  return api.posts.getPostById(id).then((data) => console.log("---0-0-", data));
+export const getPostById = (id: string) => async (dispatch: AppDispatch) => {
+  return api.posts.getPostById(id).then((data) => dispatch(setPost(data)));
 };
 
 export const getPosts = () => async (dispatch: AppDispatch) => {
-  return api.posts.getPosts().then((data) => {
-    dispatch(setPostList(data));
-  });
+  return api.posts.getPosts().then((data) => dispatch(setPostList(data)));
 };
-
