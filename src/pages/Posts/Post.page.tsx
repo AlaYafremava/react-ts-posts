@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getPostById } from "../../redux/slices";
 import { getUserById } from "../../redux/slices/users/users.actions";
+import { CircularProgress, Grid } from "@mui/material";
 
 export default function PostPage() {
   const dispatch = useAppDispatch();
@@ -17,20 +18,30 @@ export default function PostPage() {
   const { id } = useParams();
 
   useEffect(() => {
-    const fetchPost = async () => {
-      await dispatch(getPostById(id as string));
+    if (!id) return;
+
+    const fetchData = async () => {
+      await Promise.all([dispatch(getPostById(id)), dispatch(getUserById(id))]);
     };
 
-    fetchPost();
+    fetchData();
   }, [dispatch, id]);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      await dispatch(getUserById(post?.userId as string));
-    };
-
-    fetchUser();
-  }, [dispatch, post]);
+  if (!post || !user) {
+    return (
+      <Grid
+        container
+        margin="10px"
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <CircularProgress color="primary" />
+      </Grid>
+    );
+  }
 
   return (
     <Card sx={{ margin: "10px" }}>

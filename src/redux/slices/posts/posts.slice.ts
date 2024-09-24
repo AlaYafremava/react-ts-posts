@@ -4,11 +4,13 @@ import { Post } from "../../../api/types";
 interface InitialState {
   list: Post[];
   post: Post | null;
+  getPostsIsProcessing: boolean;
 }
 
 const initialState: InitialState = {
   list: [],
   post: null,
+  getPostsIsProcessing: false,
 };
 
 const postsReducerSlice = createSlice({
@@ -20,6 +22,12 @@ const postsReducerSlice = createSlice({
     },
     setPost: (state, action: PayloadAction<InitialState["post"]>) => {
       state.post = action.payload;
+    },
+    setGetPostsIsProcessing: (
+      state,
+      action: PayloadAction<InitialState["getPostsIsProcessing"]>
+    ) => {
+      state.getPostsIsProcessing = action.payload;
     },
   },
 });
